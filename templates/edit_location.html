@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Edit Location</h2>
+<form method="POST" action="">
+  <div class="mb-3">
+    <label for="location_id" class="form-label">Location ID</label>
+    <input type="text" id="location_id" class="form-control" value="{{ location.location_id }}" disabled>
+  </div>
+  <div class="mb-3">
+    <label for="name" class="form-label">Location Name</label>
+    <input type="text" name="name" id="name" class="form-control" value="{{ location.name }}" required>
+  </div>
+  <button type="submit" class="btn btn-success">Update Location</button>
+  <a href="{{ url_for('locations') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

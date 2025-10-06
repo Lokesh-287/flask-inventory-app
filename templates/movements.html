@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Record Product Movement</h2>
+
+<form method="POST" action="/movement/add" class="mb-3">
+  <label>Product</label>
+  <select name="product_id" required>
+    {% for product in products %}
+      <option value="{{ product.product_id }}">{{ product.name }}</option>
+    {% endfor %}
+  </select>
+
+  <label>From Location</label>
+  <select name="from_location">
+    <option value="">-- None --</option>
+    {% for location in locations %}
+      <option value="{{ location.location_id }}">{{ location.name }}</option>
+    {% endfor %}
+  </select>
+
+  <label>To Location</label>
+  <select name="to_location">
+    <option value="">-- None --</option>
+    {% for location in locations %}
+      <option value="{{ location.location_id }}">{{ location.name }}</option>
+    {% endfor %}
+  </select>
+
+  <label>Quantity</label>
+  <input type="number" name="qty" required min="1">
+
+  <button type="submit" class="btn btn-primary btn-sm">Add Movement</button>
+</form>
+
+<hr>
+
+<h2>All Movements</h2>
+<table class="table table-bordered">
+  <tr>
+    <th>Product</th>
+    <th>From</th>
+    <th>To</th>
+    <th>Qty</th>
+    <th>Timestamp</th>
+    <th>Actions</th>
+  </tr>
+  {% for m in movements %}
+  <tr>
+    <td>{{ m.product_id }}</td>
+    <td>{{ m.from_location or '-' }}</td>
+    <td>{{ m.to_location or '-' }}</td>
+    <td>{{ m.qty }}</td>
+    <td>{{ m.timestamp }}</td>
+    <td>
+      <a href="{{ url_for('edit_movement', movement_id=m.movement_id) }}" class="btn btn-warning btn-sm">Edit</a>
+      <a href="{{ url_for('delete_movement', movement_id=m.movement_id) }}" class="btn btn-danger btn-sm">Delete</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
